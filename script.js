@@ -1,23 +1,51 @@
-// // Assignment code here
+// prettier-ignore
+let length = "";
+
+passwordChoices = [];
+
+//array of choices
+
+// prettier-ignore
+uppercaseArray = ['A', 'B', 'C','D', 'E', 'F', 'G', 'H', 'I','J', 'K', 'L', 'M', 'N', 'O','P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y','Z'];
+// prettier-ignore
+lowercaseArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i','j', 'k', 'l', 'm', 'n', 'o','p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y','z'];
+// prettier-ignore
+symbolsArray = ['!', '?', '@', '#', '$', '%', '/', '<', '>','&', '*'];
+// prettier-ignore
+numbersArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
 
 // // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// // Write password to the #password input
-// function writePassword() {
-//   var password = generatePassword();
-//   var passwordText = document.querySelector("#password");
+//steps to generate password, must get criteria first
+//
+var getPassword = function () {
+  getCriteria();
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+};
 
-//   passwordText.value = password;
-// }
+//function to generate pw after criteria is inputted
+var generatePassword = function () {
+  var password = "";
+  for (let i = 0; i < length; i++) {
+    var randomCharacters = Math.floor(Math.random() * passwordChoices.length);
+    password = password + passwordChoices[randomCharacters];
+  }
+  return password;
+};
 
-// // Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword);
-
-//function to ask password length
+//function to ask ppassword criteria
 var getCriteria = function () {
-  var length = window.prompt(
-    "How many characters would you like the password to be? Please choose between 8 and 128 characters."
+  //resets array each time you generate password
+  passwordChoices = [];
+
+  //asks user for lenght of password and requires a valid input. calls function again if input is not valid
+  length = parseInt(
+    window.prompt(
+      "How many characters would you like the password to be? Please choose between 8 and 128 characters."
+    )
   );
   if (length < 8) {
     window.alert("Password must be atleast 8 characters.");
@@ -31,49 +59,27 @@ var getCriteria = function () {
     window.alert("Please input a valid answer.");
     getCriteria();
   }
-  return length;
-};
 
-//asks user about uppercase, lowercase and symbols and stores them as true or false
-var getUpperCase = function () {
-  includeUpperCase = window.confirm("Include uppercase letters?");
-  return includeUpperCase;
-};
+  //asks user about uppercase, lowercase and symbols and then concatanates strings
+  if (window.confirm("Include uppercase letters?")) {
+    passwordChoices = passwordChoices.concat(uppercaseArray);
+  }
 
-var getLowerCase = function () {
-  includeLowerCase = window.confirm("Include lowercase letters?");
-  return includeLowerCase;
-};
+  if (window.confirm("Include lowercase letters?")) {
+    passwordChoices = passwordChoices.concat(lowercaseArray);
+  }
 
-var getSymbols = function () {
-  includeSymbols = window.confirm("Include symbols?");
-  return includeSymbols;
-};
-//logs "hi" as many times as password input
-var randomLetters = function () {
-  for (let i = 0; i < passwordCriteria.passwordLength; i++) {
-    console.log("hi");
+  if (window.confirm("Include symbols?")) {
+    passwordChoices = passwordChoices.concat(symbolsArray);
+  }
+
+  if (window.confirm("Include numbers?")) {
+    passwordChoices = passwordChoices.concat(numbersArray);
   }
 };
 
-//calls pw criteria function on button click
-// var onButtonClick = function () {
-//   generateBtn.addEventListener("click", getCriteria);
-// };
-
-// onButtonClick();
-
-//creates object for parameters
-var passwordCriteria = {
-  passwordLength: getCriteria(),
-  uppercase: getUpperCase(),
-  lowercase: getLowerCase(),
-  symbol: getSymbols(),
-};
-
-console.log(passwordCriteria);
-randomLetters();
-
+// on button click, call getPassword function
+generateBtn.addEventListener("click", getPassword);
 //on click ask user series of questions
 //length 8-128 characters
 //include lowercase, uppercase, numeric or special
