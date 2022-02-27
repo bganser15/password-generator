@@ -1,6 +1,7 @@
-// prettier-ignore
+// declaring length variable to use in getCriteria function
 let length = "";
 
+//empty array to later concanate with password criteria characters
 passwordChoices = [];
 
 //array of choices
@@ -18,7 +19,7 @@ numbersArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
 var generateBtn = document.querySelector("#generate");
 
 //steps to generate password, must get criteria first
-//
+// assigns password via query selector to show up in passwordText on screen
 var getPassword = function () {
   getCriteria();
   var password = generatePassword();
@@ -80,6 +81,7 @@ var getCriteria = function () {
 
 // on button click, call getPassword function
 generateBtn.addEventListener("click", getPassword);
+
 //on click ask user series of questions
 //length 8-128 characters
 //include lowercase, uppercase, numeric or special
